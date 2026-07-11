@@ -18,13 +18,9 @@ android {
         jvmTarget = "1.8"
     }
 
-    sourceSets {
-        main.java.srcDirs += "src/main/kotlin"
-    }
-
     defaultConfig {
         applicationId "com.chatwing"
-        minSdk 21
+        minSdk 23
         targetSdk 34
         versionCode 1
         versionName "1.0.0"
@@ -39,6 +35,9 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:"
+
+    // Flutter v2 embedding
+    implementation "io.flutter:flutter_embedding_release"
 
     // Room (SQLite)
     def room_version = "2.6.1"
