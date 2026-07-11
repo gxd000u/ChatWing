@@ -21,13 +21,15 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: 3.27.0
+          flutter-version: 3.24.0
           channel: stable
+      - name: Check Flutter version
+        run: flutter --version
       - name: Flutter pub get
         run: flutter pub get
       - name: Build APK
         run: flutter build apk --release
-        timeout-minutes: 15
+        timeout-minutes: 20
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
