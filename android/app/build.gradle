@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    compileSdk flutter.compileSdkVersion
+    compileSdk 34
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -25,7 +25,7 @@ android {
     defaultConfig {
         applicationId "com.chatwing"
         minSdk 21
-        targetSdk flutter.targetSdkVersion
+        targetSdk 34
         versionCode 1
         versionName "1.0.0"
     }
@@ -35,10 +35,6 @@ android {
             signingConfig signingConfigs.debug
         }
     }
-}
-
-flutter {
-    source "../.."
 }
 
 dependencies {
@@ -58,7 +54,4 @@ dependencies {
 
     // AndroidX
     implementation "androidx.core:core-ktx:1.12.0"
-
-    // Flutter embedding (release variant, debug was removed in Flutter 3.29.2)
-    implementation "io.flutter:flutter_embedding_release:1.0.0-eee-this-is-replaced-by-flutter"
 }
