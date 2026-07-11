@@ -1,0 +1,22 @@
+===== 踩坑记录（本次对话）=====
+日期：2026-07-11
+项目：ChatWing 安卓应用基础框架
+
+【构建失败修复】
+- app/build.gradle 混合使用了新旧两种 Flutter Gradle 插件方式
+- 同时使用了 plugins 块和 apply plugin 方式
+- 使用了已废弃的 flutter_embedding_debug 依赖（占位符）
+- compileSdkVersion 应改为 compileSdk flutter.compileSdkVersion
+- 缺失 dev.flutter.flutter-gradle-plugin 插件
+- 修复方案：
+  1. 保留 plugins 块，删除 apply plugin 和 apply from
+  2. 添加 id "dev.flutter.flutter-gradle-plugin"
+  3. 删除 flutter_embedding_debug 依赖
+  4. 删除 localProperties 块（新 Flutter 插件方式不需要）
+  5. 删除 minifyEnabled 和 proguard 配置
+  6. 使用 flutter.compileSdkVersion/targetSdkVersion 代替硬编码版本
+
+【当前状态】
+- 已提交修复：commit 2fb3681
+- 已推送到 GitHub main 分支
+- 应自动触发 GitHub Actions 构建
