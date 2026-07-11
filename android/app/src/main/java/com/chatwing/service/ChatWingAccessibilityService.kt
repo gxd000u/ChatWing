@@ -10,12 +10,12 @@ import android.view.accessibility.AccessibilityNodeInfo
 import kotlinx.coroutines.*
 
 /**
- * ChatWing 无障碍服务
- * 负责：
- * 1. 监听微信/牵手App等聊天界面的 UI 变化
- * 2. 自动抓取联系人信息（昵称、头像、主页简介）
- * 3. 模拟点击和文本输入实现自动回复
- * 4. 触发截图分析事件
+ * ChatWing ?????
+ * ???
+ * 1. ????/??App?????? UI ??
+ * 2. ?????????????????????
+ * 3. ???????????????
+ * 4. ????????
  */
 class ChatWingAccessibilityService : AccessibilityService() {
 
@@ -28,6 +28,13 @@ class ChatWingAccessibilityService : AccessibilityService() {
             private set
 
         fun isRunning(): Boolean = instance != null
+
+        const val ACTION_CHAT_WINDOW_OPENED = "com.chatwing.CHAT_WINDOW_OPENED"
+        const val ACTION_NEW_MESSAGE = "com.chatwing.NEW_MESSAGE"
+        const val ACTION_CONTACT_INFO = "com.chatwing.CONTACT_INFO"
+        const val ACTION_AUTO_REPLY = "com.chatwing.AUTO_REPLY"
+        const val ACTION_SEND_TEXT = "com.chatwing.SEND_TEXT"
+        const val ACTION_CLICK_SEND = "com.chatwing.CLICK_SEND"
     }
 
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
@@ -37,22 +44,15 @@ class ChatWingAccessibilityService : AccessibilityService() {
     override fun onServiceConnected() {
         super.onServiceConnected()
         instance = this
-        Log.i(TAG, "AccessibilityService 已连接")
-
-        val info = accessibilityServiceInfo
-        info.eventTypes = AccessibilityEvent.TYPES_ALL_MASK
-        info.feedbackType = AccessibilityServiceInfo.FEEDBACK_GENERIC
-        info.flags = AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS or
-                AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS
-        info.notificationTimeout = 100
-        this.serviceInfo = info
+        Log.i(TAG, "AccessibilityService ???")
+        configureServiceInfo()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         instance = null
         scope.cancel()
-        Log.i(TAG, "AccessibilityService 已销毁")
+        Log.i(TAG, "AccessibilityService ???")
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent) {
@@ -65,14 +65,14 @@ class ChatWingAccessibilityService : AccessibilityService() {
     }
 
     override fun onInterrupt() {
-        Log.w(TAG, "AccessibilityService 被中断")
+        Log.w(TAG, "AccessibilityService ???")
     }
 
     private fun handleWindowChange(event: AccessibilityEvent) {
         val pkg = event.packageName?.toString() ?: return
         currentAppPackage = pkg
         if (pkg in listOf(WECHAT_PACKAGE, QIANSHOU_PACKAGE)) {
-            Log.d(TAG, "检测到目标应用窗口变化: $pkg")
+            Log.d(TAG, "???????????: $pkg")
             notifyChatWindowOpened(pkg)
             scope.launch {
                 delay(500)
@@ -85,7 +85,7 @@ class ChatWingAccessibilityService : AccessibilityService() {
         val text = event.text?.joinToString("") ?: return
         if (text == lastProcessedText) return
         lastProcessedText = text
-        Log.d(TAG, "文本变化: $text")
+        Log.d(TAG, "????: $text")
         notifyNewMessageReceived(text, event.packageName?.toString() ?: "")
     }
 
@@ -97,7 +97,7 @@ class ChatWingAccessibilityService : AccessibilityService() {
         val contactInfo = extractInfoFromNode(root)
         root.recycle()
         if (contactInfo != null) {
-            Log.i(TAG, "抓取到联系人信息: $contactInfo")
+            Log.i(TAG, "????????: $contactInfo")
             broadcastContactInfo(contactInfo)
         }
     }
@@ -175,7 +175,7 @@ class ChatWingAccessibilityService : AccessibilityService() {
     private fun findSendButton(root: AccessibilityNodeInfo): AccessibilityNodeInfo? {
         val desc = root.contentDescription?.toString() ?: ""
         val text = root.text?.toString() ?: ""
-        if (desc.contains("send", ignoreCase = true) || text == "发送" || text == "Send") return root
+        if (desc.contains("send", ignoreCase = true) || text == "??" || text == "Send") return root
         for (i in 0 until root.childCount) {
             val child = root.getChild(i) ?: continue
             val result = findSendButton(child)
@@ -196,6 +196,16 @@ class ChatWingAccessibilityService : AccessibilityService() {
         })
     }
 
+    private fun configureServiceInfo() {
+        val info = AccessibilityServiceInfo()
+        info.eventTypes = AccessibilityEvent.TYPES_ALL_MASK
+        info.feedbackType = AccessibilityServiceInfo.FEEDBACK_GENERIC
+        info.flags = AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS or
+                AccessibilityServiceInfo.FLAG_REPORT_VIEW_IDS
+        info.notificationTimeout = 100
+        serviceInfo = info
+    }
+
     private fun broadcastContactInfo(info: ContactInfo) {
         sendBroadcast(Intent(ACTION_CONTACT_INFO).apply {
             putExtra("nickname", info.nickName)
@@ -205,12 +215,5 @@ class ChatWingAccessibilityService : AccessibilityService() {
 
     data class ContactInfo(val nickName: String, val packageName: String, val avatarBase64: String? = null, val bio: String? = null)
 
-    companion object Actions {
-        const val ACTION_CHAT_WINDOW_OPENED = "com.chatwing.CHAT_WINDOW_OPENED"
-        const val ACTION_NEW_MESSAGE = "com.chatwing.NEW_MESSAGE"
-        const val ACTION_CONTACT_INFO = "com.chatwing.CONTACT_INFO"
-        const val ACTION_AUTO_REPLY = "com.chatwing.AUTO_REPLY"
-        const val ACTION_SEND_TEXT = "com.chatwing.SEND_TEXT"
-        const val ACTION_CLICK_SEND = "com.chatwing.CLICK_SEND"
-    }
 }
+

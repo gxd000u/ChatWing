@@ -9,8 +9,8 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 /**
- * 通义千问 API 适配器
- * 备用模型，适合长文本理解和复杂推理
+ * ???? API ???
+ * ?????????????????
  */
 class TongyiQwenProvider : LLMProvider {
 
@@ -19,7 +19,7 @@ class TongyiQwenProvider : LLMProvider {
         private const val DEFAULT_MODEL = "qwen-turbo"
     }
 
-    override val name: String get() = "通义千问"
+    override val name: String get() = "????"
     override var apiKey: String = ""
     override val baseUrl: String get() = DEFAULT_BASE_URL
     override val modelName: String get() = DEFAULT_MODEL
@@ -66,6 +66,7 @@ class TongyiQwenProvider : LLMProvider {
         if (code != 200) throw RuntimeException("Qwen API error $code: ${connection.errorStream?.bufferedReader()?.readText()}")
 
         val json = JSONObject(connection.inputStream.bufferedReader().readText())
-        json.getJSONObject("output").getJSONObject("choices").getJSONObject(0).getJSONObject("message").getString("content").trim()
+        json.getJSONObject("output").getJSONArray("choices").getJSONObject(0).getJSONObject("message").getString("content").trim()
     }
 }
+

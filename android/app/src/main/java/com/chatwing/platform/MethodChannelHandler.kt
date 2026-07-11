@@ -1,3 +1,4 @@
+import io.flutter.plugin.common.MethodCall
 package com.chatwing.platform
 
 import android.content.Context
@@ -9,10 +10,10 @@ import org.json.JSONArray
 import org.json.JSONObject
 
 /**
- * Flutter 与 Android 原生之间的桥梁
- * 通过 MethodChannel 双向通信
- * Flutter 端调用原生功能（悬浮窗、无障碍、屏幕投射、OCR）
- * 原生端向 Flutter 推送事件（新消息、联系人更新、截图事件）
+ * Flutter ? Android ???????
+ * ?? MethodChannel ????
+ * Flutter ?????????????????????OCR?
+ * ???? Flutter ????????????????????
  */
 class MethodChannelHandler(private val context: Context) {
 
@@ -61,12 +62,12 @@ class MethodChannelHandler(private val context: Context) {
         }
     }
 
-    /** 向 Flutter 发送事件 */
+    /** ? Flutter ???? */
     fun sendEvent(event: String, data: Map<String, Any?>) {
         try {
             methodChannel.invokeMethod(event, data)
         } catch (e: Exception) {
-            Log.w(TAG, "发送事件失败: ${e.message}")
+            Log.w(TAG, "??????: ${e.message}")
         }
     }
 
@@ -82,7 +83,7 @@ class MethodChannelHandler(private val context: Context) {
         sendEvent("onScreenshotTaken", mapOf("path" to path))
     }
 
-    // ── 方法处理 ─────────────────────────────────────────
+    // ?? ???? ?????????????????????????????????????????
 
     private fun handleStartFloatingWindow(result: MethodChannel.Result) {
         com.chatwing.service.FloatingViewService.start(context)
@@ -94,7 +95,7 @@ class MethodChannelHandler(private val context: Context) {
         result.success(true)
     }
 
-    private fun handleStartScreenCapture(call: MethodChannel.MethodCall, result: MethodChannel.Result) {
+    private fun handleStartScreenCapture(call: MethodCall, result: MethodChannel.Result) {
         val resultCode = call.argument<Int>("resultCode") ?: 0
         val data = call.argument<String>("data") ?: ""
         result.success(true)
@@ -108,7 +109,7 @@ class MethodChannelHandler(private val context: Context) {
         result.success(com.chatwing.service.ChatWingAccessibilityService.isRunning())
     }
 
-    private fun handleSendText(call: MethodChannel.MethodCall, result: MethodChannel.Result) {
+    private fun handleSendText(call: MethodCall, result: MethodChannel.Result) {
         val text = call.argument<String>("text") ?: ""
         com.chatwing.service.ChatWingAccessibilityService.instance?.typeText(text)
         result.success(true)
@@ -122,10 +123,11 @@ class MethodChannelHandler(private val context: Context) {
     private fun handleStartAutoPilot(result: MethodChannel.Result) { result.success(true) }
     private fun handleStopAutoPilot(result: MethodChannel.Result) { result.success(true) }
     private fun handleGetContacts(result: MethodChannel.Result) { result.success(JSONArray().toString()) }
-    private fun handleDeleteContact(call: MethodChannel.MethodCall, result: MethodChannel.Result) { result.success(true) }
-    private fun handleUpdateProfile(call: MethodChannel.MethodCall, result: MethodChannel.Result) { result.success(true) }
-    private fun handleGenerateReply(call: MethodChannel.MethodCall, result: MethodChannel.Result) { result.success("") }
-    private fun handleSwitchProvider(call: MethodChannel.MethodCall, result: MethodChannel.Result) { result.success(true) }
+    private fun handleDeleteContact(call: MethodCall, result: MethodChannel.Result) { result.success(true) }
+    private fun handleUpdateProfile(call: MethodCall, result: MethodChannel.Result) { result.success(true) }
+    private fun handleGenerateReply(call: MethodCall, result: MethodChannel.Result) { result.success("") }
+    private fun handleSwitchProvider(call: MethodCall, result: MethodChannel.Result) { result.success(true) }
 
     fun dispose() { scope.cancel() }
 }
+

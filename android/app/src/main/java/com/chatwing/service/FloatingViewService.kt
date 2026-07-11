@@ -12,6 +12,7 @@ import android.os.IBinder
 import android.util.Log
 import android.view.*
 import android.widget.ImageView
+import android.widget.TextView
 
 class FloatingViewService : Service() {
 
@@ -41,7 +42,7 @@ class FloatingViewService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         isRunning = true
         showFloatingBall()
-        Log.i(TAG, "悬浮窗服务已启动")
+        Log.i(TAG, "????????")
         return START_STICKY
     }
 
@@ -51,7 +52,7 @@ class FloatingViewService : Service() {
         super.onDestroy()
         removeFloatingBall(); removeFloatingPanel()
         isRunning = false
-        Log.i(TAG, "悬浮窗服务已销毁")
+        Log.i(TAG, "????????")
     }
 
     private fun showFloatingBall() {
@@ -114,7 +115,7 @@ class FloatingViewService : Service() {
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY else WindowManager.LayoutParams.TYPE_PHONE
 
         val textView = TextView(this).apply {
-            text = "ChatWing 助手面板\n[模式] 全托管/策略军师/灵感文案\n点击外部关闭此面板"
+            text = "ChatWing ????\n[??] ???/????/????\n?????????"
             setTextColor(-0x1000000); textSize = 14f
             gravity = Gravity.CENTER; setPadding(16, 16, 16, 16)
             setBackgroundColor(-0x34000000)
@@ -140,18 +141,19 @@ class FloatingViewService : Service() {
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(CHANNEL_ID, "ChatWing 悬浮窗", NotificationManager.IMPORTANCE_LOW)
-                .apply { description = "ChatWing AI 僚机悬浮助手" }
+            val channel = NotificationChannel(CHANNEL_ID, "ChatWing ???", NotificationManager.IMPORTANCE_LOW)
+                .apply { description = "ChatWing AI ??????" }
             getSystemService(NotificationManager::class.java).createNotificationChannel(channel)
         }
     }
 
     private fun buildNotification(): Notification {
         val builder = Notification.Builder(this, CHANNEL_ID)
-            .setContentTitle("ChatWing 助手运行中")
-            .setContentText("点击展开悬浮球")
+            .setContentTitle("ChatWing ?????")
+            .setContentText("???????")
             .setSmallIcon(android.R.drawable.ic_menu_compass)
             .setOngoing(true)
         return builder.build()
     }
 }
+
