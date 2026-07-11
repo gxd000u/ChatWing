@@ -8,34 +8,53 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  test-fresh-project:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: 17
-
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: 3.29.2
           channel: stable
+      - name: Create and build fresh Flutter project
+        run: |
+          cd /tmp
+          flutter create test_app
+          cd test_app
+          flutter build apk --release
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-app-apk
+          path: /tmp/test_app/build/app/outputs/flutter-apk/app-release.apk
 
+  build:
+    needs: test-fresh-project
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.29.2
+          channel: stable
       - name: Flutter pub get
         run: flutter pub get
-
       - name: Build APK
         run: flutter build apk --release
-
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: chatwing-release-apk
           path: build/app/outputs/flutter-apk/app-release.apk
-          retention-days: 30
