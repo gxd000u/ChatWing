@@ -1,0 +1,41 @@
+# Flutter/Dart
+*.iml
+.idea/
+.vscode/
+.dart_tool/
+.packages
+.pub/
+.flutter-plugins
+.flutter-plugins-dependencies
+build/
+pubspec.lock
+
+# Android
+*.apk
+*.aab
+local.properties
+*.keystore
+*.jks
+
+# iOS
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+Pods/
+Podfile.lock
+
+# IDE
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+error_log.txt
+踩坑日志
+
+# Temp
+*.tmp
+.build/
