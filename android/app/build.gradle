@@ -6,31 +6,36 @@ plugins {
 }
 
 android {
-    compileSdk 34
-    ndkVersion flutter.ndkVersion
+    namespace = "com.chatwing"
+    compileSdk = flutter.compileSdkVersion
+    ndkVersion = flutter.ndkVersion
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = JavaVersion.VERSION_1_8
     }
 
     defaultConfig {
-        applicationId "com.chatwing"
-        minSdk 23
-        targetSdk 34
-        versionCode 1
-        versionName "1.0.0"
+        applicationId = "com.chatwing"
+        minSdk = flutter.minSdkVersion
+        targetSdk = flutter.targetSdkVersion
+        versionCode = flutter.versionCode
+        versionName = flutter.versionName
     }
 
     buildTypes {
         release {
-            signingConfig signingConfigs.debug
+            signingConfig = signingConfigs.debug
         }
     }
+}
+
+flutter {
+    source = "../.."
 }
 
 dependencies {
