@@ -3,6 +3,7 @@ package com.chatwing.engine
 import com.chatwing.db.entity.ContactEntity
 import com.chatwing.db.entity.MemoryEntity
 import com.chatwing.engine.ReplyResult
+import com.chatwing.engine.UserProfile
 import com.chatwing.engine.ChatMessage
 
 /**
@@ -49,7 +50,7 @@ abstract class BaseChatEngine {
     abstract suspend fun loadMemory(memories: List<MemoryEntity>)
 
     /** ??????????? */
-    abstract suspend fun generateReply(lastMessage: String, context: String = ""): ReplyResult
+    abstract suspend fun generateReply(lastMessage: String, context: String = ""): com.chatwing.engine.ReplyResult
 
     // ?? Prompt ?? ??????????????????????????????????????
 
@@ -113,31 +114,4 @@ abstract class BaseChatEngine {
 
     // ?? ??? ???????????????????????????????????????????
 
-    data class UserProfile(
-        var age: String = "",
-        var zodiac: String = "",
-        var mbti: String = "",
-        var occupation: String = "",
-        var income: String = "",
-        var hobbies: String = "",
-        var loveView: String = "",
-        var verbalTics: String = "",
-        var extraInfo: String = ""
-    )
-
-    data class ChatMessage(
-        val content: String,
-        val isFromMe: Boolean,
-        val timestamp: Long = System.currentTimeMillis()
-    )
-
-    data class ReplyResult(
-        val replies: List<String>,
-        val analysis: String = "",
-        val engineType: EngineType
-    )
-
-    enum class EngineType { AUTO_PILOT, STRATEGIST, INSPIRATION }
 }
-
-
