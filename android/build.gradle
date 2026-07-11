@@ -16,3 +16,14 @@ subprojects {
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
+
+// Namespace fallback for library plugins (required by AGP 8.x)
+subprojects {
+    afterEvaluate { project ->
+        if (project.hasProperty('android') && project.android.hasProperty('namespace')) {
+            if (project.android.namespace == null) {
+                project.android.namespace = project.group ?: "com.chatwing.${project.name}"
+            }
+        }
+    }
+}
