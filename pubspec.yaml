@@ -10,23 +10,11 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # 状态管理
   provider: ^6.1.1
-
-  # 本地存储
   sqflite: ^2.3.2
   path_provider: ^2.1.2
-
-  # HTTP (调用大模型API)
   http: ^1.2.0
-
-  # 加密 (API Key 安全存储)
   flutter_secure_storage: ^9.0.0
-
-  # 剪贴板
-  clipboard: ^0.1.3
-
-  # Cupertino 图标
   cupertino_icons: ^1.0.6
 
 dev_dependencies:
