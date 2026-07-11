@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    compileSdk 34
+    compileSdk flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -20,7 +20,7 @@ android {
     defaultConfig {
         applicationId "com.chatwing"
         minSdk 23
-        targetSdk 34
+        targetSdk flutter.targetSdkVersion
         versionCode 1
         versionName "1.0.0"
     }
@@ -33,12 +33,12 @@ android {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    // Room (SQLite) - without kapt to test v1 embedding
+    // Room (SQLite)
     def room_version = "2.6.1"
-    implementation "androidx.room:room-runtime:"
-    implementation "androidx.room:room-ktx:"
+    implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.room:room-ktx:$room_version"
 
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3"
@@ -48,4 +48,7 @@ dependencies {
 
     // AndroidX
     implementation "androidx.core:core-ktx:1.12.0"
+
+    // Flutter v2 embedding
+    implementation "io.flutter:flutter_embedding_release"
 }
