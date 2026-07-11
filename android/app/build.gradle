@@ -1,7 +1,6 @@
 plugins {
     id "com.android.application"
     id "kotlin-android"
-    id "kotlin-kapt"
     id "dev.flutter.flutter-gradle-plugin"
 }
 
@@ -36,14 +35,10 @@ android {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:"
 
-    // Flutter v2 embedding
-    implementation "io.flutter:flutter_embedding_release"
-
-    // Room (SQLite)
+    // Room (SQLite) - without kapt to test v1 embedding
     def room_version = "2.6.1"
     implementation "androidx.room:room-runtime:"
     implementation "androidx.room:room-ktx:"
-    kapt "androidx.room:room-compiler:"
 
     // Coroutines
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3"
