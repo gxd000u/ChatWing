@@ -1,15 +1,15 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
 
-/// Flutter 与 Android 原生之间的桥梁
-/// 通过 MethodChannel 调用原生功能
+/// Flutter ? Android ???????
+/// ?? MethodChannel ??????
 class PlatformBridge {
   static const _channel = MethodChannel('com.chatwing/native');
   static const _eventChannel = MethodChannel('com.chatwing/events');
 
   static late final PlatformBridge instance;
 
-  /// 事件回调
+  /// ????
   Function(String text, String packageName)? onNewMessage;
   Function(String nickname, String packageName)? onContactDetected;
   Function(String path)? onScreenshotTaken;
@@ -38,76 +38,91 @@ class PlatformBridge {
 
   static void init() => instance = PlatformBridge._();
 
-  // ── 悬浮窗 ──
+  // ?? ??? ??
   static Future<bool> startFloatingWindow() async {
-    return _channel.invokeMethod('startFloatingWindow');
+    final r = await _channel.invokeMethod('startFloatingWindow');
+    return r as bool;
   }
 
   static Future<bool> stopFloatingWindow() async {
-    return _channel.invokeMethod('stopFloatingWindow');
+    final r = await _channel.invokeMethod('stopFloatingWindow');
+    return r as bool;
   }
 
-  // ── 屏幕捕获 ──
-  static Future<bool> startScreenCapture(
-      int resultCode, String data) async {
-    return _channel
-        .invokeMethod('startScreenCapture', {'resultCode': resultCode, 'data': data});
+  // ?? ???? ??
+  static Future<bool> startScreenCapture(int resultCode, String data) async {
+    final r = await _channel.invokeMethod('startScreenCapture', {
+      'resultCode': resultCode,
+      'data': data,
+    });
+    return r as bool;
   }
 
   static Future<bool> stopScreenCapture() async {
-    return _channel.invokeMethod('stopScreenCapture');
+    final r = await _channel.invokeMethod('stopScreenCapture');
+    return r as bool;
   }
 
-  // ── 无障碍服务 ──
+  // ?? ????? ??
   static Future<bool> enableAccessibilityService() async {
-    return _channel.invokeMethod('enableAccessibilityService');
+    final r = await _channel.invokeMethod('enableAccessibilityService');
+    return r as bool;
   }
 
-  // ── 自动化操作 ──
+  // ?? ????? ??
   static Future<bool> sendText(String text) async {
-    return _channel.invokeMethod('sendText', {'text': text});
+    final r = await _channel.invokeMethod('sendText', {'text': text});
+    return r as bool;
   }
 
   static Future<bool> clickSend() async {
-    return _channel.invokeMethod('clickSend');
+    final r = await _channel.invokeMethod('clickSend');
+    return r as bool;
   }
 
-  // ── 联系人 ──
+  // ?? ??? ??
   static Future<List<Map<String, dynamic>>> getContacts() async {
     final result = await _channel.invokeMethod('getContacts');
     if (result == null) return [];
-    final list = jsonDecode(result as String) as List;
+    final s = result as String;
+    final list = jsonDecode(s) as List;
     return list.cast<Map<String, dynamic>>();
   }
 
   static Future<bool> deleteContact(int id) async {
-    return _channel.invokeMethod('deleteContact', {'id': id});
+    final r = await _channel.invokeMethod('deleteContact', {'id': id});
+    return r as bool;
   }
 
-  // ── 引擎控制 ──
+  // ?? ???? ??
   static Future<bool> startAutoPilot() async {
-    return _channel.invokeMethod('startAutoPilot');
+    final r = await _channel.invokeMethod('startAutoPilot');
+    return r as bool;
   }
 
   static Future<bool> stopAutoPilot() async {
-    return _channel.invokeMethod('stopAutoPilot');
+    final r = await _channel.invokeMethod('stopAutoPilot');
+    return r as bool;
   }
 
   static Future<String> generateReply(
       String engineType, String lastMessage, String context) async {
-    return _channel.invokeMethod('generateReply', {
+    final result = await _channel.invokeMethod('generateReply', {
       'engineType': engineType,
       'lastMessage': lastMessage,
       'context': context,
     });
+    return (result ?? '') as String;
   }
 
-  // ── 设置 ──
+  // ?? ?? ??
   static Future<bool> switchProvider(String provider) async {
-    return _channel.invokeMethod('switchProvider', {'provider': provider});
+    final r = await _channel.invokeMethod('switchProvider', {'provider': provider});
+    return r as bool;
   }
 
   static Future<bool> updateProfile(Map<String, dynamic> profile) async {
-    return _channel.invokeMethod('updateProfile', profile);
+    final r = await _channel.invokeMethod('updateProfile', profile);
+    return r as bool;
   }
 }
