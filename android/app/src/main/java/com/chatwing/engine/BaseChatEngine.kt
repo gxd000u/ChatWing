@@ -32,9 +32,6 @@ abstract class BaseChatEngine {
     fun setContact(contact: ContactEntity) { currentContact = contact }
 
     /** ???????? */
-    fun setUserProfile(profile: UserProfile) { userProfile = profile }
-
-    /** ???????? */
     fun addMessage(msg: ChatMessage) {
         recentMessages.add(msg)
         if (recentMessages.size > maxRecentRounds * 2) {
@@ -44,9 +41,6 @@ abstract class BaseChatEngine {
     }
 
     /** ??????????? */
-    fun setRelationshipSummary(summary: String) { relationshipSummary = summary }
-
-    /** ?????? */
     abstract suspend fun loadMemory(memories: List<MemoryEntity>)
 
     /** ??????????? */
