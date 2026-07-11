@@ -8,33 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  test-fresh-project:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 17
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: 3.29.2
-          channel: stable
-      - name: Create and build fresh Flutter project
-        run: |
-          cd /tmp
-          flutter create test_app
-          cd test_app
-          flutter build apk --release
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-app-apk
-          path: /tmp/test_app/build/app/outputs/flutter-apk/app-release.apk
-
   build:
-    needs: test-fresh-project
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -47,12 +21,13 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: 3.29.2
+          flutter-version: 3.27.0
           channel: stable
       - name: Flutter pub get
         run: flutter pub get
       - name: Build APK
         run: flutter build apk --release
+        timeout-minutes: 15
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
