@@ -24,11 +24,8 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
+          flutter-version: '3.29.2'
           channel: 'stable'
-          cache: true
-
-      - name: Setup Android NDK
-        run: echo "y" | sudo ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --install "ndk;27.0.12077973" --sdk_root=${ANDROID_HOME}
 
       - name: Install dependencies
         run: flutter pub get

@@ -21,7 +21,6 @@ apply plugin: 'com.android.application'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    ndkVersion "27.0.12077973"
     compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
@@ -78,3 +77,4 @@ dependencies {
     // Notification compat
     implementation 'androidx.core:core-ktx:1.12.0'
 }
+
