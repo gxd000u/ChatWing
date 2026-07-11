@@ -2,6 +2,8 @@ package com.chatwing.engine
 
 import com.chatwing.db.entity.ContactEntity
 import com.chatwing.db.entity.MemoryEntity
+import com.chatwing.engine.ReplyResult
+import com.chatwing.engine.ChatMessage
 
 /**
  * ??????
@@ -137,4 +139,5 @@ abstract class BaseChatEngine {
 
     enum class EngineType { AUTO_PILOT, STRATEGIST, INSPIRATION }
 }
+
 
