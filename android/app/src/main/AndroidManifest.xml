@@ -1,7 +1,4 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.chatwing">
-
-    <!-- 必要权限 -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
@@ -18,16 +15,15 @@
         android:icon="@mipmap/ic_launcher"
         android:label="ChatWing"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ChatWing">
+        android:theme="@style/LaunchTheme">
 
-        <!-- 主 Activity (Flutter 入口) -->
         <activity
-            android:name="io.flutter.embedding.android.FlutterActivity"
-            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|layoutDirection|fontScale|screenLayout|density|smallestScreenSize"
-            android:hardwareAccelerated="true"
-            android:launchMode="singleTop"
+            android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.ChatWing"
+            android:launchMode="singleTop"
+            android:theme="@style/LaunchTheme"
+            android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
+            android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,7 +31,6 @@
             </intent-filter>
         </activity>
 
-        <!-- 无障碍服务 -->
         <service
             android:name=".service.ChatWingAccessibilityService"
             android:exported="true"
@@ -48,18 +43,14 @@
                 android:resource="@xml/accessibility_service_config" />
         </service>
 
-        <!-- 屏幕捕获前台服务 -->
         <service
             android:name=".service.ScreenCaptureService"
             android:exported="false"
             android:foregroundServiceType="mediaProjection" />
 
-        <!-- 悬浮窗前台服务 -->
         <service
             android:name=".service.FloatingViewService"
             android:exported="false"
             android:foregroundServiceType="dataSync" />
-
     </application>
-
 </manifest>
