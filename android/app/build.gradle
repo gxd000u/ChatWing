@@ -47,3 +47,10 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3"
 }
 
+
+// Disable Kotlin tooling metadata (causes CI issues)
+afterEvaluate {
+    tasks.matching { it.name == "buildKotlinToolingMetadata" }.configureEach {
+        enabled = false
+    }
+}
