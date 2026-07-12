@@ -2,6 +2,9 @@ name: Build ChatWing APK
 
 on: [push, workflow_dispatch]
 
+env:
+  KOTLIN_TOOLING_METADATA_DIR: /home/runner/work/kotlinToolingMetadata
+
 jobs:
   build:
     runs-on: ubuntu-latest
