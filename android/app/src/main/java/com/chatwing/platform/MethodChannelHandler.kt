@@ -111,12 +111,12 @@ class MethodChannelHandler(private val context: Context) {
 
     private fun handleSendText(call: MethodCall, result: MethodChannel.Result) {
         val text = call.argument<String>("text") ?: ""
-        com.chatwing.service.ChatWingAccessibilityService.instance?.typeText(text)
+        com.chatwing.service.ChatWingAccessibilityService.getInstance()?.typeText(text)
         result.success(true)
     }
 
     private fun handleClickSend(result: MethodChannel.Result) {
-        com.chatwing.service.ChatWingAccessibilityService.instance?.clickSendButton()
+        com.chatwing.service.ChatWingAccessibilityService.getInstance()?.clickSendButton()
         result.success(true)
     }
 
