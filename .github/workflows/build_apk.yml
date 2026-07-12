@@ -1,5 +1,4 @@
 name: Build ChatWing APK
-
 on: [push, workflow_dispatch]
 
 jobs:
@@ -17,11 +16,10 @@ jobs:
           channel: stable
       - name: Check version
         run: flutter --version
+      - name: Setup ADB
+        run: export ANDROID_HOME=/usr/local/lib/android/sdk && export PATH=$ANDROID_HOME/platform-tools:$PATH && which adb || echo 'adb not found'
       - name: Build APK
-        run: |
-      export ANDROID_HOME=/usr/local/lib/android/sdk
-      export PATH=$ANDROID_HOME/platform-tools:$PATH
-      flutter build apk --release 
+        run: export ANDROID_HOME=/usr/local/lib/android/sdk && export PATH=$ANDROID_HOME/platform-tools:$PATH && flutter build apk --release
         timeout-minutes: 20
       - uses: actions/upload-artifact@v4
         with:
