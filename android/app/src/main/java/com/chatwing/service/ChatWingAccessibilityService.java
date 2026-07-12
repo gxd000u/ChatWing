@@ -1,4 +1,4 @@
-﻿package com.chatwing.service;
+package com.chatwing.service;
 
 import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.AccessibilityServiceInfo;
