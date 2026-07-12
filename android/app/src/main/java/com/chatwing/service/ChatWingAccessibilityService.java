@@ -46,7 +46,7 @@ public class ChatWingAccessibilityService extends AccessibilityService {
     public static final String EXTRA_BUBBLES_JSON    = "extra_bubbles_json";
     public static final String EXTRA_CURRENT_PKG     = "extra_current_pkg";
 
-    private static ChatWingAccessibilityService instance;
+    public static ChatWingAccessibilityService instance;
 
     /** 最近抓取到的API level */
     private static int apiLevel = Build.VERSION.SDK_INT;
