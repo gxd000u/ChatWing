@@ -18,7 +18,10 @@ jobs:
       - name: Check version
         run: flutter --version
       - name: Build APK
-        run: flutter build apk --release --no-pub
+        run: |
+      export ANDROID_HOME=/usr/local/lib/android/sdk
+      export PATH=$ANDROID_HOME/platform-tools:$PATH
+      flutter build apk --release 
         timeout-minutes: 20
       - uses: actions/upload-artifact@v4
         with:
