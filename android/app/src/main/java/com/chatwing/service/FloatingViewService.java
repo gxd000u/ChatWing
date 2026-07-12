@@ -59,35 +59,13 @@ public class FloatingViewService extends Service {
     // 前台App检测
     private String currentForegroundPkg = "";
 
-    public static void start(android.content.Context ctx) {
-        android.content.Intent intent = new android.content.Intent(ctx, FloatingViewService.class);
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            ctx.startForegroundService(intent);
-        } else {
-            ctx.startService(intent);
-        }
-    }
-    public static void stop(android.content.Context ctx) {
-        ctx.stopService(new android.content.Intent(ctx, FloatingViewService.class));
-    }
-    public static void start(android.content.Context ctx) {
-        android.content.Intent intent = new android.content.Intent(ctx, FloatingViewService.class);
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            ctx.startForegroundService(intent);
-        } else {
-            ctx.startService(intent);
-        }
-    }
-    public static void stop(android.content.Context ctx) {
-        ctx.stopService(new android.content.Intent(ctx, FloatingViewService.class));
-    }
     public static boolean isRunning() { return instance != null; }
 
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
-        windowManager = (WindowManager) (WindowManager) getSystemService(WINDOW_SERVICE);
+        windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         createNotificationChannel();
         startForeground(NOTIFICATION_ID, buildNotification());
         registerAppChangeReceiver();
