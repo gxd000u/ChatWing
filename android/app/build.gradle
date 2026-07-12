@@ -46,3 +46,10 @@ dependencies {
     ksp "androidx.room:room-compiler:2.6.1"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3"
 }
+
+// Fix Kotlin tooling metadata CI issue
+afterEvaluate {
+    tasks.matching { it.name == "buildKotlinToolingMetadata" }.configureEach {
+        enabled = false
+    }
+}
