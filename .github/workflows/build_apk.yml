@@ -18,9 +18,7 @@ jobs:
       - name: Check version
         run: flutter --version
       - name: Build APK
-        run: |
-      sudo mkdir -p /intermediates/flutter/release /kotlinToolingMetadata
-      flutter build apk --release
+        run: flutter build apk --release
         timeout-minutes: 20
       - uses: actions/upload-artifact@v4
         with:
