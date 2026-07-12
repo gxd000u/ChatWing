@@ -31,5 +31,4 @@ plugins {
     id "org.jetbrains.kotlin.android" version "2.0.0" apply false
 }
 
-rootProject.buildDir = "../build"
 include ":app"
