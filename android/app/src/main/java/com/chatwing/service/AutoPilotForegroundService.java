@@ -1,4 +1,4 @@
-﻿package com.chatwing.service;
+package com.chatwing.service;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
