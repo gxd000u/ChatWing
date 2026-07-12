@@ -54,3 +54,13 @@ afterEvaluate {
         enabled = false
     }
 }
+// Ensure build directory exists for CI
+afterEvaluate { p ->
+    p.tasks.matching { t ->
+        t.name.contains("Metadata") || t.name.contains("compileFlutter")
+    }.configureEach { t ->
+        t.doFirst {
+            project.buildDir.mkdirs()
+        }
+    }
+}
