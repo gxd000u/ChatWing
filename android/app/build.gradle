@@ -46,21 +46,3 @@ dependencies {
     ksp "androidx.room:room-compiler:2.6.1"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3"
 }
-
-
-// Disable Kotlin tooling metadata (causes CI issues)
-afterEvaluate {
-    tasks.matching { it.name == "buildKotlinToolingMetadata" }.configureEach {
-        enabled = false
-    }
-}
-// Ensure build directory exists for CI
-afterEvaluate { p ->
-    p.tasks.matching { t ->
-        t.name.contains("Metadata") || t.name.contains("compileFlutter")
-    }.configureEach { t ->
-        t.doFirst {
-            project.buildDir.mkdirs()
-        }
-    }
-}
