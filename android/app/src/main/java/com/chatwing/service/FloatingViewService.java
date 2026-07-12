@@ -76,7 +76,7 @@ public class FloatingViewService extends Service {
     public void onCreate() {
         super.onCreate();
         instance = this;
-        windowManager = getSystemService(WINDOW_SERVICE);
+        windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
         createNotificationChannel();
         startForeground(NOTIFICATION_ID, buildNotification());
         registerAppChangeReceiver();
